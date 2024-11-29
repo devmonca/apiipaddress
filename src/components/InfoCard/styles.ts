@@ -14,10 +14,10 @@ export const InfoCardList = styled.ul`
     text-align: center;
 
     @media (min-width: 768px) {
-        grid-template-columns: 18% 1px 18% 1px 18% 1px 18%;
+        grid-template-columns: 20% 1px 20% 1px 20% 1px 20%;
         flex-direction: row;
         text-align: left;
-        padding: 2rem 0;
+        padding: 2rem;
         max-width: 72rem;
         margin: 2rem;
     }
