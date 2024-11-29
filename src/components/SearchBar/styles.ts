@@ -10,12 +10,11 @@ export const SearchBarForm = styled.form`
 
 export const SearchBarInput = styled.input`
     flex: 1;
-    padding: 1.5rem 0;
+    padding: 1rem 2rem 1rem 1rem;
     outline: none;
     background-color: transparent;
     font: ${({theme})=> theme.fonts.text};
     color: ${({theme})=> theme.colors.text};
-    text-indent: 1.75rem;
 
     &::placeholder{
         color: ${({theme})=> theme.colors.border};
@@ -27,7 +26,8 @@ export const SearchBarInput = styled.input`
     }
 
     @media (min-width: 768px) {
-        padding: 1rem 0;
+        padding: 1rem 12rem 1rem 1rem;
+        text-indent: 0;
     }
 `
 
