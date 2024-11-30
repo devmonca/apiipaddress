@@ -2,10 +2,11 @@ import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css"
 import "./styles.css"
 import { useState } from "react";
-
+import { useLocation } from "../../context/LocationContext";
 export function Map(){
-    const [center, setCenter] = useState(
-        [51.505, -0.09]
+    const {data} = useLocation()
+    const [center] = useState(
+        [data.lat, data.lng]
     )
 
     return (

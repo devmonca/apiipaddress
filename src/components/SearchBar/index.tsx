@@ -1,21 +1,37 @@
 import { SearchBarButton, SearchBarForm, SearchBarInput } from "./styles";
-import { FormEvent } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
+import { getGeolocation } from "../../util/geoLocationApi";
+import { useLocation } from "../../context/LocationContext";
+
+export function SearchBar(){
+    const [inputIp, setInputIp] = useState('');
+    const {setData} = useLocation()
 
 function submitForm (event : FormEvent){
     event.preventDefault()
     console.log("handleSubmitForm funcionando")
 }
 
-function handleSearchButton(){
-    
+function handleNewIp(event: ChangeEvent<HTMLInputElement>){
+    setInputIp(event.target.value)
 }
 
-export function SearchBar(){
+const handleSubmit = (event: FormEvent) => {
+    event.preventDefault(); 
+    if (inputIp) {
+        getGeolocation(inputIp, setData)
+    }
+    
+  };
 
     return (
         <SearchBarForm onSubmit={submitForm}>
-            <SearchBarInput placeholder="Search for any IP address or domain" required/>
-            <SearchBarButton type="submit" onClick={handleSearchButton}>	
+            <SearchBarInput 
+                placeholder="Search for any IP address or domain"
+                onChange={handleNewIp}
+                required
+            />
+            <SearchBarButton type="submit" onClick={handleSubmit}>	
                 &gt;
             </SearchBarButton>
         </SearchBarForm>
