@@ -4,16 +4,13 @@ import { theme } from "./styles/theme";
 import { Home } from "./pages/Home";
 import { LocationProvider } from "./context/LocationContext";
 
-
-
 export function App() {
   
   return (
     <ThemeProvider theme={theme}>
       <LocationProvider>
-
-      <GlobalStyles/>
-      <Home/>
+        <GlobalStyles/>
+        <Home/>
       </LocationProvider>
     </ThemeProvider>
   )
