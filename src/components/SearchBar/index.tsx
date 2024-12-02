@@ -1,39 +1,57 @@
-import { SearchBarButton, SearchBarForm, SearchBarInput } from "./styles";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ErrorSpan, SearchBarButton, SearchBarFieldset, SearchBarForm, SearchBarInput } from "./styles";
 import { getGeolocation } from "../../util/geoLocationApi";
 import { useLocation } from "../../context/LocationContext";
+import { useForm } from "react-hook-form";
+import { z } from 'zod'
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const newSearchschema = z.object({
+    ipordomain: z
+    .string()
+    .min(2,{message: "Digite ao menos 2 caracteres"})
+    .max(26, {message: 'Entrada inválida, permitido até 26 caracteres'})
+    .nonempty({message: "Valor inválido"})
+    .refine(value=> !/^\s*$/.test(value), {message: "Espaço não é válido como entrada"})
+    
+})
+
+type NewSearchIpProps = z.infer<typeof newSearchschema>
 
 export function SearchBar(){
-    const [inputIp, setInputIp] = useState('');
+
     const {setData} = useLocation()
+    const { register, handleSubmit, reset, formState:{ errors } } = useForm<NewSearchIpProps>({
+        resolver: zodResolver(newSearchschema),
+        defaultValues:{
+            ipordomain: ''
+        }
+    })
 
-function submitForm (event : FormEvent){
-    event.preventDefault()
-    console.log("handleSubmitForm funcionando")
-}
-
-function handleNewIp(event: ChangeEvent<HTMLInputElement>){
-    setInputIp(event.target.value)
-}
-
-const handleSubmit = (event: FormEvent) => {
-    event.preventDefault(); 
-    if (inputIp) {
-        getGeolocation(inputIp, setData)
+    function onSearch(data: NewSearchIpProps){
+        const { ipordomain } = data
+        getGeolocation(ipordomain, setData)
+        reset()
     }
-    
-  };
 
     return (
-        <SearchBarForm onSubmit={submitForm}>
+        <>
+        <SearchBarForm onSubmit={handleSubmit(onSearch)}>
+           <SearchBarFieldset>
             <SearchBarInput 
-                placeholder="Search for any IP address or domain"
-                onChange={handleNewIp}
-                required
-            />
-            <SearchBarButton type="submit" onClick={handleSubmit}>	
-                &gt;
-            </SearchBarButton>
+                    placeholder="Search for any IP address or domain"
+                    {...register("ipordomain")}
+                    type="text"
+                    
+                />
+                <SearchBarButton 
+                    type="submit"
+                    // disabled={ipordomain}
+                >	
+                    &gt;
+                </SearchBarButton>
+            </SearchBarFieldset>
+            {errors.ipordomain && <ErrorSpan>{errors.ipordomain.message}</ErrorSpan>}
         </SearchBarForm>
+        </>
     )
 }
