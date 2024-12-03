@@ -62,3 +62,10 @@ export const ErrorSpan = styled.span`
     color: ${({theme})=> theme.colors.background};
 `
 
+export const BoxDefault = styled.div`
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+`
