@@ -1,13 +1,24 @@
+import { useEffect } from "react";
+import { useLocation } from "../../context/LocationContext";
 import { InfoCardItem, InfoCardList, InforCardDivisor } from "./styles";
+import { getGeolocationUser } from '../../util/geoLocationApi.ts'
 
 export function InfoCard(){
 
+    const {setData} = useLocation()
+    getGeolocationUser(setData)
+    const {data} = useLocation()
+    useEffect(() => {
+        // A cada vez que os dados mudarem, o componente será re-renderizado
+        console.log("Dados atualizados:", data);
+    }, [data]); // Adicionando 'data' como dependência para detectar mudanças
+    
     return (
-        <InfoCardList>
+        <InfoCardList onLoad={()=>getGeolocationUser}>
             <InfoCardItem>
                 <label htmlFor="">ip address</label>
                 <span>
-                    192.212.174.101
+                    {data.ip}
                     {/* injeção de dados da requisição*/}
                 </span>
             </InfoCardItem>
@@ -15,7 +26,7 @@ export function InfoCard(){
             <InfoCardItem>
                 <label htmlFor="">location</label>
                 <span>
-                    Brooklyn, NY 10001
+                    {data.city},{data.region} 
                     {/* injeção de dados da requisição*/}
                 </span>
             </InfoCardItem>
@@ -23,7 +34,7 @@ export function InfoCard(){
             <InfoCardItem>
                 <label htmlFor="">timezone</label>
                 <span>
-                    UTC - 05:00
+                    UTC - {data.region}
                     {/* injeção de dados da requisição*/}
                 </span>
             </InfoCardItem>
@@ -31,7 +42,7 @@ export function InfoCard(){
             <InfoCardItem>
                 <label htmlFor="">isp</label>
                 <span>
-                    SpaceX Startlink
+                    {data.isp}
                     {/* injeção de dados da requisição*/}
                 </span>
             </InfoCardItem>

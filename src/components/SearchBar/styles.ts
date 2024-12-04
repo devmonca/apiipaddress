@@ -1,11 +1,21 @@
 import styled from "styled-components";
 
 export const SearchBarForm = styled.form`
+    
+`
+
+export const SearchBarFieldset = styled.div`
+    border: none;
     display: flex;
     background-color: ${({ theme }) => theme.colors.cardBackground};
     border-radius: 12px;
     max-width: 450px;
     margin: 1rem auto;
+    /* border: 1px solid transparent; */
+
+    &:invalid{
+        border-color: red;
+    }
 `
 
 export const SearchBarInput = styled.input`
@@ -22,7 +32,7 @@ export const SearchBarInput = styled.input`
     }
 
     &:focus {
-        border-color: ${({ theme }) => theme.colors.border};
+        /* border-color: ${({ theme }) => theme.colors.border}; */
     }
 
     @media (min-width: 768px) {
@@ -44,7 +54,18 @@ export const SearchBarButton = styled.button`
     cursor: pointer;
 
     &:hover{
-        opacity: 0.7;
+        background-color: #969696;
     }
 `
 
+export const ErrorSpan = styled.span`
+    color: ${({theme})=> theme.colors.background};
+`
+
+export const BoxDefault = styled.div`
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+`
