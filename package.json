@@ -19,6 +19,7 @@
     "react-hook-form": "^7.53.2",
     "react-leaflet": "^4.2.1",
     "react-loading-icons": "^1.1.0",
+    "styled-components": "^6.1.14",
     "zod": "^3.23.8"
   },
   "devDependencies": {
