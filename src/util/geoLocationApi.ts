@@ -26,7 +26,7 @@ export const getGeolocation = async(ipAddress: string, setData: React.Dispatch<R
     const apiKey = import.meta.env.VITE_API_KEY;
     try{
         // Buscando com fetch
-        const geolocation = await fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=${ipAddress}`)
+        await fetch(`https://geo.ipify.org/api/v2/country,city?apiKey=${apiKey}&ipAddress=${ipAddress}`)
         .then(data=>{
             if(!data.ok){
                 throw new Error(`${data.status}`) // se der erro na busca
